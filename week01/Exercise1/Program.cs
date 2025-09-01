@@ -4,6 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        //This is a comment
         Console.Write("What is your name? ");
         string first_name = Console.ReadLine();
         Console.Write("What is your last name? ");
