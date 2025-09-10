@@ -3,12 +3,13 @@ using System.Security.Cryptography.X509Certificates;
 
 class Program
 {
+    //This file will run all objects and orchestrate the program
     static void Main(string[] args)
     {
-        //This file will run all objects and orchestrate the program
         int choice = 0;
         string inputChoice = "";
-        var journal = new Write();
+        var journal = new Journal();
+        var load = new Load(journal.Entries);
         while (choice != 5)
         {
             Console.WriteLine("Welcome to the journal program!");
@@ -26,13 +27,13 @@ class Program
 
             if (choice == 1)
             {
-                journal.write();
-                journal.TemporarySave();
+                journal.WritePrompt();
+                journal.TempSaveEntry();
 
             }
             else if (choice == 2)
             {
-                journal.Display();
+                load.Display();
             }
             else if (choice == 3)
             {
@@ -49,7 +50,7 @@ class Program
             }
             else
             {
-                Console.WriteLine("Please enter a valid number");
+                Console.WriteLine("Please enter a valid number.");
             }
         }
     }
