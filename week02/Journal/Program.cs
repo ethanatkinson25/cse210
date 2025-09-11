@@ -9,7 +9,6 @@ class Program
         int choice = 0;
         string inputChoice = "";
         var journal = new Journal();
-        var load = new Load(journal.Entries);
         while (choice != 5)
         {
             Console.WriteLine("Welcome to the journal program!");
@@ -33,15 +32,15 @@ class Program
             }
             else if (choice == 2)
             {
-                load.Display();
+                journal.Display();
             }
             else if (choice == 3)
             {
-                //Code goes here
+                journal.LoadFile();
             }
             else if (choice == 4)
             {
-                //Code goes here
+                journal.SaveFile();
             }
             else if (choice == 5)
             {
