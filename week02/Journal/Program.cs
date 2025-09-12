@@ -1,9 +1,9 @@
+//I added a feature that checks the generated prompt so that it does not ask the same prompt twice in a row
 using System;
 using System.Security.Cryptography.X509Certificates;
 
 class Program
 {
-    //This file will run all objects and orchestrate the program
     static void Main(string[] args)
     {
         int choice = 0;
