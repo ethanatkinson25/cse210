@@ -2,7 +2,6 @@ using System;
 
 public class Entry
 {
-    //This class will store the entry that was recently made until another object uses it
     private string _prompt;
     private string _entry;
     private DateTime _date;
