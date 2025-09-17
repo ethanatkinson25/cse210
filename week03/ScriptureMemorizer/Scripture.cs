@@ -10,24 +10,70 @@ public class Scripture
 
     private List<Word> _wordList = new List<Word>();
     private Reference _reference = new Reference();
-    private Word _word = new Word();
+    // private Word _word = new Word();
     private int _hideStatus;
 
     public string printFullScripture()
     {
-        string fullScripture = $"{_reference.getBook()} {_reference.getChapter()} {_reference.getVerseRef()} {_reference.getVerseText()}";
+        breakVerse();
+        string fullScripture = $"{_reference.getBook()} {_reference.getChapter()} {_reference.getVerseRef()}\n";
 
         return fullScripture;
     }
 
-    public void breakVerse()
+    public string printWordList()
     {
-        string unbrokenVerse1, unbrokenVerse2 = _reference.getVerseText();
+        foreach (Word storedWord in _wordList)
+        {
+            Console.Write($"{storedWord.getStoredWord()} ");
+        }
+        return "";
+    }
+
+    private void breakVerse()
+    {
+        string unbrokenVerse = _reference.getVerseText();
+        string[] verses = unbrokenVerse.Split("\n");
+        string verse1 = verses[0];
+        string verse2 = verses[1];
+
         // Split string, create objects for each word, add word objects to _wordList
+        string[] wordsInVerse = verse1.Split(' ');
+        string[] wordsInVerse2 = verse2.Split(' ');
+        foreach (string word in wordsInVerse)
+        {
+            Word wordObj = new Word(word);
+            _wordList.Add(wordObj);
+        }
+        foreach (string word in wordsInVerse2)
+        {
+            Word wordObj = new Word(word);
+            _wordList.Add(wordObj);
+        }
+
     }
 
     public void hideWord()
     {
-        bool hide = _word.changeHiddenStatus();
+        // Randomly select a word to hide in the _wordList
+        Random random = new Random();
+        int randomIndex = random.Next(_wordList.Count);
+
+        Word hiddenWord = _wordList[randomIndex];
+        hiddenWord.changeHiddenStatus();
+        _hideStatus = 1;
+        // Turn the characters of the word into _
+        for (int i = 0; i < _wordList.Count; i++)
+        {
+            if (_wordList[i].getStoredWord() == hiddenWord.getStoredWord())
+            {
+                for (int j = 0; j < hiddenWord.getStoredWord().Length; j++)
+                {
+                    char changedChar = hiddenWord.getStoredWord()[j];
+                    changedChar = '_';
+                    Console.Write(changedChar +" ");
+                }
+            }
+        }
     }
 }

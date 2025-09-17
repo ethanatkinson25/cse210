@@ -8,6 +8,11 @@ public class Word
     private string _storedWord;
     private bool _hiddenStatus = false;
 
+    public Word(string word)
+    {
+        _storedWord = word;
+    }
+
     public string getStoredWord()
     {
         return _storedWord;
@@ -17,5 +22,10 @@ public class Word
     {
         _hiddenStatus = true;
         return true;
+    }
+
+    public bool getHiddenStatus()
+    {
+        return _hiddenStatus;
     }
 }

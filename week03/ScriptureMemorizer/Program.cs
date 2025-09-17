@@ -13,14 +13,16 @@ class Program
         var scripture = new Scripture();
         string quit_status = "";
         string input;
+
+        
         while (quit_status != "q")
         {
             Console.WriteLine("Welcome to the Scripture Guessing Program!");
             Console.WriteLine();
             Console.WriteLine("Here is your scripture to memorize:");
             Console.WriteLine();
-            Console.WriteLine($"{scripture.printFullScripture()}");
-            // Console.WriteLine("There is a scripture here_______");
+            Console.WriteLine($"{scripture.printFullScripture()} ");
+            Console.WriteLine($"{scripture.printWordList()}");
             Console.WriteLine();
             Console.WriteLine("Press Enter or Space to continue. Press 'q' to quit;");
             Console.Write("> ");
@@ -29,7 +31,7 @@ class Program
             {
                 // Hide a random word or words
                 // Print Verse with hidden words
-                scripture.breakVerse();
+                scripture.hideWord();
             }
             else if (input == "q")
             {
@@ -38,6 +40,7 @@ class Program
             else
             {
                 Console.WriteLine("Please enter a valid input.");
+                Console.Write(">");
             }
         }
     }
