@@ -13,9 +13,16 @@ public class Word
         _storedWord = word;
     }
 
-    public string getStoredWord()
+    public void getStoredWord()
     {
-        return _storedWord;
+        if (_hiddenStatus == true)
+        {
+            hide();
+        }
+        else
+        {
+            Console.Write($"{_storedWord} ");
+        }
     }
 
     public bool changeHiddenStatus()
@@ -24,8 +31,26 @@ public class Word
         return true;
     }
 
+    public void hide()
+    {
+        for (int j = 0; j < _storedWord.Length; j++)
+        {
+            char changedChar = _storedWord[j];
+            changedChar = '_';
+            Console.Write(changedChar);
+        }
+        Console.Write(" ");
+    }
+
     public bool getHiddenStatus()
     {
-        return _hiddenStatus;
+        if (_hiddenStatus == true)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

@@ -10,27 +10,19 @@ public class Scripture
 
     private List<Word> _wordList = new List<Word>();
     private Reference _reference = new Reference();
-    // private Word _word = new Word();
-    private int _hideStatus;
 
-    public string printFullScripture()
+    public void printFullScripture()
     {
-        breakVerse();
-        string fullScripture = $"{_reference.getBook()} {_reference.getChapter()} {_reference.getVerseRef()}\n";
-
-        return fullScripture;
-    }
-
-    public string printWordList()
-    {
+        string scriptureRef = $"{_reference.getVerseRef()}\n";
+        Console.WriteLine(scriptureRef);
+        Console.WriteLine();
         foreach (Word storedWord in _wordList)
         {
-            Console.Write($"{storedWord.getStoredWord()} ");
+            storedWord.getStoredWord();
         }
-        return "";
     }
 
-    private void breakVerse()
+    public void breakVerse()
     {
         string unbrokenVerse = _reference.getVerseText();
         string[] verses = unbrokenVerse.Split("\n");
@@ -61,18 +53,18 @@ public class Scripture
 
         Word hiddenWord = _wordList[randomIndex];
         hiddenWord.changeHiddenStatus();
-        _hideStatus = 1;
         // Turn the characters of the word into _
         for (int i = 0; i < _wordList.Count; i++)
         {
-            if (_wordList[i].getStoredWord() == hiddenWord.getStoredWord())
+            if (_wordList[i].getHiddenStatus() == hiddenWord.getHiddenStatus())
             {
-                for (int j = 0; j < hiddenWord.getStoredWord().Length; j++)
-                {
-                    char changedChar = hiddenWord.getStoredWord()[j];
-                    changedChar = '_';
-                    Console.Write(changedChar +" ");
-                }
+                // for (int j = 0; j < hiddenWord.getStoredWord().Length; j++)
+                // {
+                //     char changedChar = hiddenWord.getStoredWord()[j];
+                //     changedChar = '_';
+                //     Console.Write(changedChar +" ");
+                // }
+                hiddenWord.hide();
             }
         }
     }

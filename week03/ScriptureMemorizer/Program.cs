@@ -14,23 +14,22 @@ class Program
         string quit_status = "";
         string input;
 
-        
+        scripture.breakVerse();
         while (quit_status != "q")
         {
+            Console.Clear();
             Console.WriteLine("Welcome to the Scripture Guessing Program!");
             Console.WriteLine();
             Console.WriteLine("Here is your scripture to memorize:");
             Console.WriteLine();
-            Console.WriteLine($"{scripture.printFullScripture()} ");
-            Console.WriteLine($"{scripture.printWordList()}");
+            scripture.printFullScripture();
+            // Console.WriteLine($"{scripture.printWordList()}");
             Console.WriteLine();
             Console.WriteLine("Press Enter or Space to continue. Press 'q' to quit;");
             Console.Write("> ");
             input = Console.ReadLine();
             if (input == "" | input == " ")
             {
-                // Hide a random word or words
-                // Print Verse with hidden words
                 scripture.hideWord();
             }
             else if (input == "q")
