@@ -49,23 +49,41 @@ public class Scripture
     {
         // Randomly select a word to hide in the _wordList
         Random random = new Random();
-        int randomIndex = random.Next(_wordList.Count);
+        Word hiddenWord;
 
-        Word hiddenWord = _wordList[randomIndex];
+        do
+        {
+            int randomIndex = random.Next(_wordList.Count);
+            hiddenWord = _wordList[randomIndex];
+        } while (hiddenWord.getHiddenStatus());
+
         hiddenWord.changeHiddenStatus();
         // Turn the characters of the word into _
         for (int i = 0; i < _wordList.Count; i++)
         {
             if (_wordList[i].getHiddenStatus() == hiddenWord.getHiddenStatus())
             {
-                // for (int j = 0; j < hiddenWord.getStoredWord().Length; j++)
-                // {
-                //     char changedChar = hiddenWord.getStoredWord()[j];
-                //     changedChar = '_';
-                //     Console.Write(changedChar +" ");
-                // }
-                hiddenWord.hide();
+                if (hiddenWord.getHiddenStatus() == true)
+                {
+                    hiddenWord.hide();
+                }
+                else if (hiddenWord.getHiddenStatus() == false)
+                {
+                    continue;
+                }
             }
         }
+    }
+
+    public bool isCompletelyHidden()
+    {
+        for (int i = 0; i < _wordList.Count; i++)
+        {
+            if (_wordList[i].getHiddenStatus() == false)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

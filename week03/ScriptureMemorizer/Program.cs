@@ -28,9 +28,16 @@ class Program
             Console.WriteLine("Press Enter or Space to continue. Press 'q' to quit;");
             Console.Write("> ");
             input = Console.ReadLine();
-            if (input == "" | input == " ")
+            if (input == "")
             {
-                scripture.hideWord();
+                if (scripture.isCompletelyHidden() == false)
+                {
+                    scripture.hideWord();
+                }
+                else
+                {
+                    break;
+                }
             }
             else if (input == "q")
             {
@@ -39,7 +46,8 @@ class Program
             else
             {
                 Console.WriteLine("Please enter a valid input.");
-                Console.Write(">");
+                Console.Write("> ");
+                input = Console.ReadLine();
             }
         }
     }
