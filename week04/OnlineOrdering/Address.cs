@@ -62,7 +62,7 @@ public class Address
 
     public string getFullAddress()
     {
-        return $"{_streetAddress}, {_city}, {_state} {_country}";
+        return $"{_streetAddress}, {_city}, {_state}, {_country}";
     }
 
     public bool isInUSA()
