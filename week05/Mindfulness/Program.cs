@@ -33,7 +33,8 @@ class Program
             else if (choice == "2")
             {
                 reflectionActivity.startMessage();
-
+                reflectionActivity.askPrompt();
+                reflectionActivity.askQuestion();
                 reflectionActivity.endMessage();
             }
             else if (choice == "3")
