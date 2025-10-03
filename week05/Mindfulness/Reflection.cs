@@ -2,7 +2,7 @@ using System;
 
 public class Reflection : Activity
 {
-    private int _questionCount;
+    private int _questionCount = 0;
     public Reflection()
     {
         _activityName = "Reflection";
@@ -72,7 +72,7 @@ public class Reflection : Activity
     public void askQuestion()
     {
         _questionCount = 0;
-        string question = "";
+        string question;
         DateTime startTime = DateTime.Now;
         DateTime futureTime = startTime.AddSeconds(_durationInSec);
         Console.Clear();

@@ -31,6 +31,8 @@ public class Listing : Activity
     public void listResponse()
     {
         string prompt = generateRandomQuestion();
+        string response;
+        int responseCount = 0;
 
         Console.WriteLine("List all the positive things you can about the following prompt:");
         Console.WriteLine();
@@ -38,12 +40,27 @@ public class Listing : Activity
         Console.WriteLine();
         loadingAnimation();
         loadingAnimation();
+        Console.Write("You may begin in... ");
+        countDown();
 
-        
+        DateTime startTime = DateTime.Now;
+        DateTime futureTime = startTime.AddSeconds(_durationInSec);
+        Console.Clear();
+
+        DateTime currentTime = DateTime.Now;
+        while (currentTime < futureTime)
+        {
+            Console.Write("> ");
+            response = Console.ReadLine();
+            _responseList.Add(response);
+            currentTime = DateTime.Now;
+            responseCount += 1;
+        }
+        displayResponse(responseCount);
     }
 
-    public void displayResponse()
+    private void displayResponse(int responseCount)
     {
-        
+        Console.WriteLine($"You entered in: {responseCount} things! Well done!");
     }
 }

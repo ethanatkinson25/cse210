@@ -61,7 +61,6 @@ public class Activity
             Thread.Sleep(600);
 
             currentPauseTime = DateTime.Now;
-            Console.Write("\b \b");
         }
     }
     

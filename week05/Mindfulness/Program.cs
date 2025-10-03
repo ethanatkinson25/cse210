@@ -11,7 +11,7 @@ class Program
 
         string choice = "";
 
-        while (choice != "q")
+        while (choice != "q" || choice != "4" || choice != "Q")
         {
             // Console.Clear();
             Console.WriteLine("Welcome to the mindfulness program!");
@@ -21,6 +21,7 @@ class Program
             Console.WriteLine("1. Breathing Activity");
             Console.WriteLine("2. Reflection Activity");
             Console.WriteLine("3. Listing Activity");
+            Console.WriteLine("4. Q (Quit)");
             Console.Write("> ");
             choice = Console.ReadLine();
 
@@ -40,8 +41,12 @@ class Program
             else if (choice == "3")
             {
                 listingActivity.startMessage();
-
+                listingActivity.listResponse();
                 listingActivity.endMessage();
+            }
+            else if (choice == "4" | choice == "q" || choice == "Q")
+            {
+                break;
             }
             else
             {

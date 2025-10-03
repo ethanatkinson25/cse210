@@ -16,7 +16,7 @@ public class Breathing : Activity
         DateTime futureTime = startTime.AddSeconds(_durationInSec);
 
         // Console.Clear();
-        Console.Write("Get ready...");
+        Console.Write("Get ready...  ");
         loadingAnimation();
         Console.WriteLine();
         DateTime currentTime = DateTime.Now;
