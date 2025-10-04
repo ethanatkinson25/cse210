@@ -4,6 +4,7 @@ using System.Net;
 public class Listing : Activity
 {
     private List<string> _responseList = new List<string>();
+    private List<int> _previousQuestionIndex = new List<int>();
     public Listing()
     {
         _activityName = "Listing";
@@ -13,18 +14,39 @@ public class Listing : Activity
 
     private string generateRandomQuestion()
     {
-        string[] randomQuestionChoice = {
-            "Who are people that you appreciate?",
-            "What are personal strengths of yours?",
-            "Who are people that you have helped this week?",
-            "When have you felt the Holy Ghost this month?",
-            "Who are some of your personal heroes?"
-        };
-
         Random random = new Random();
-        int randomIndex = random.Next(randomQuestionChoice.Length);
+        int randomIndex;
+        string selected;
+        bool isDuplicate = true;
+        do
+        {
+            string[] randomQuestionChoice = {
+                "Who are people that you appreciate?",
+                "What are personal strengths of yours?",
+                "Who are people that you have helped this week?",
+                "When have you felt the Holy Ghost this month?",
+                "Who are some of your personal heroes?"
+            };
 
-        string selected = randomQuestionChoice[randomIndex];
+            randomIndex = random.Next(randomQuestionChoice.Length);
+            selected = randomQuestionChoice[randomIndex];
+
+
+            for (int i = 0; i < _previousQuestionIndex.Count; i++)
+            {
+                if (_previousQuestionIndex[i] == randomIndex)
+                {
+                    isDuplicate = true;
+                    break;
+                }
+                else
+                {
+                    isDuplicate = false;
+                }
+            }
+        } while (isDuplicate == true);
+        _previousQuestionIndex.Add(randomIndex);
+
         return selected;
     }
 
