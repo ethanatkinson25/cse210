@@ -10,6 +10,7 @@ public class GoalManager {
 
     public void start()
     {
+        displayPoints();
         _input = "";
         while (_input != "5")
         {
@@ -170,15 +171,29 @@ public class GoalManager {
 
     public void saveGoal()
     {
+        Console.WriteLine("What file do you want to save to?");
         string filename = "C:/Users/threa/OneDrive/Documents/Projects/cse210/week06/EternalQuest/goals.txt";
 
         using (StreamWriter outputFile = new StreamWriter(filename))
         {
             int itemCount = 0;
+            outputFile.WriteLine(_totalPoints);
             foreach (Goal goal in goalList)
             {
-                itemCount += 1;
-                outputFile.WriteLine($"{itemCount}. {goal.getGoalName()}: {goal.getGoalDescription()} \nCompleted: {goal.IsComplete()}~");
+                if (goal is SimpleGoal)
+                {
+                    itemCount += 1;
+                    outputFile.WriteLine($"{itemCount} | {goal.getGoalName()} | {goal.getGoalDescription()} | {goal.IsComplete()} | {goal.getPoints()}~");
+                } else if (goal is EternalGoal)
+                {
+                    itemCount += 1;
+                    outputFile.WriteLine($"{itemCount} | {goal.getGoalName()} | {goal.getGoalDescription()} | {goal.getPoints()}~");
+                } else if (goal is ChecklistGoal checklistGoal)
+                {
+                    itemCount += 1;
+                    outputFile.WriteLine($"{itemCount} | {checklistGoal.getGoalName()} | {checklistGoal.getGoalDescription()} | {checklistGoal.IsComplete()} | {checklistGoal.getPoints()} |{checklistGoal.getCompletionTimes()} | {checklistGoal.getSetAmount()}~");
+                }
+                
             }
             
         }
@@ -187,27 +202,104 @@ public class GoalManager {
 
     public void loadGoal()
     {
+        Console.WriteLine("What file do you want to load from?");
         string filename = "C:/Users/threa/OneDrive/Documents/Projects/cse210/week06/EternalQuest/goals.txt";
         string[] lines = System.IO.File.ReadAllLines(filename);
-        
-        for (int line = 0; line < lines.Length; line++)
-        {
-            string[] parts = lines[line].Split("~");
+        int itemCount = 0;
+        _totalPoints = int.Parse(lines[0]);
 
+        for (int line = 1; line < lines.Length; line++)
+        {   
+            string[] parts = lines[line].Split("~");
             foreach (string str in parts)
             {
-                Console.WriteLine(str);
+                if (string.IsNullOrWhiteSpace(str)) continue;
+                string[] subparts = str.Split("|");
+                if (subparts.Length == 6)
+                {
+                    ChecklistGoal checklistGoal = new ChecklistGoal();
+                    int completionAmount = int.Parse(subparts[5]);
+                    int addedPoints = int.Parse(subparts[4]);
+                    checklistGoal.setGoalName(subparts[1]);
+                    checklistGoal.setGoalDescription(subparts[2]);
+                    checklistGoal.setAttemptAmount(int.Parse(subparts[6]));
+                    checklistGoal.setPoints(addedPoints);
+                    if (checklistGoal.IsComplete() == true)
+                    {
+                        _totalPoints += addedPoints;
+                    }
+                    itemCount += 1;
+                    checklistGoal.setCompletionAmount(completionAmount);
+
+                    Console.WriteLine($"{itemCount}. {checklistGoal.getGoalName()}: {checklistGoal.getGoalDescription()} \nIs Complete: {checklistGoal.IsComplete()}\n{checklistGoal.getCompletionTimes()}/{checklistGoal.getSetAmount()}\nPoints: {checklistGoal.getPoints()}");
+                    Console.WriteLine();
+                } else if (subparts.Length == 4)
+                {
+                    EternalGoal eternalGoal = new EternalGoal();
+                    int addedPoints = int.Parse(subparts[3]);
+                    eternalGoal.setGoalName(subparts[1]);
+                    eternalGoal.setGoalDescription(subparts[2]);
+                    eternalGoal.setPoints(addedPoints);
+                    if (eternalGoal.IsComplete() == true)
+                    {
+                        _totalPoints += addedPoints;
+                    }
+                    itemCount += 1;
+
+                    Console.WriteLine($"{itemCount}. {eternalGoal.getGoalName()}: {eternalGoal.getGoalDescription()}\nPoints: {eternalGoal.getPoints()}");
+                    Console.WriteLine();
+                } else
+                {
+                    SimpleGoal simpleGoal = new SimpleGoal();
+                    int addedPoints = int.Parse(subparts[4]);
+                    simpleGoal.setGoalName(subparts[1]);
+                    simpleGoal.setGoalDescription(subparts[2]);
+                    simpleGoal.setPoints(addedPoints);
+                    if (simpleGoal.IsComplete() == true)
+                    {
+                        _totalPoints += addedPoints;
+                    }
+                    itemCount += 1;
+
+                    Console.WriteLine($"{itemCount}. {simpleGoal.getGoalName()}: {simpleGoal.getGoalDescription()}\nComplete: {simpleGoal.IsComplete()}\nPoints: {simpleGoal.getPoints()}");
+                    Console.WriteLine();
+                    break;
+                }
             }
         }
     }
 
     public void displayPoints()
     {
-        
+        Console.WriteLine($"You have {_totalPoints} points!");
     }
     
     public void markGoal()
     {
-        
+        _input = "";
+        Console.WriteLine("Your current goals are: ");
+        loadGoal();
+        Console.WriteLine();
+        Console.WriteLine("Which goal did you acomplish?");
+        Console.Write("> ");
+        _input = Console.ReadLine();
+        int inputNum = int.Parse(_input);
+
+        for(int i = 0; i < goalList.Count; i++)
+        {
+            if (i ==  inputNum - 1)
+            {
+                if (goalList[i] is SimpleGoal simpleGoal)
+                {
+                    simpleGoal.setIsComplete(true);
+                    _totalPoints += simpleGoal.getPoints();
+                } else if (goalList[i] is ChecklistGoal checklistGoal)
+                {
+                    checklistGoal.IsComplete();
+                    int attempts = checklistGoal.getCompletionTimes();
+                    checklistGoal.setCompletionAmount(attempts + 1);
+                }
+            }
+        }
     }
 }

@@ -12,5 +12,8 @@ public class SimpleGoal : Goal
     public void setIsComplete(bool completeStatus)
     {
         _isComplete = completeStatus;
+
     }
+
+
 }
