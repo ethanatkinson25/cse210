@@ -5,16 +5,18 @@ public class GoalManager {
     private List<Goal> goalList = new List<Goal>();
     private string _input;
     private int _totalPoints;
+    private int _playerLevel;
 
 
 
     public void start()
     {
         displayPoints();
+        displayLevel();
         _input = "";
         while (_input != "5")
         {
-            // Console.Clear();
+            Console.Clear();
             Console.WriteLine("Select an option:");
             Console.WriteLine("1. Create new goal");
             Console.WriteLine("2. List goals");
@@ -59,7 +61,7 @@ public class GoalManager {
     public void createGoal()
     {
         _input = "";
-        // Console.Clear();
+        Console.Clear();
         Console.WriteLine("The types of goals are:");
         Console.WriteLine("1. Simple goals");
         Console.WriteLine("2. Eternal goals");
@@ -127,6 +129,7 @@ public class GoalManager {
             string completionString = "";
             int completions = 0;
             ChecklistGoal checklistGoal = new ChecklistGoal();
+            Console.Clear();
 
             Console.WriteLine("What do you want the name of your goal to be?");
             Console.Write("> ");
@@ -172,7 +175,8 @@ public class GoalManager {
     public void saveGoal()
     {
         Console.WriteLine("What file do you want to save to?");
-        string filename = "C:/Users/threa/OneDrive/Documents/Projects/cse210/week06/EternalQuest/goals.txt";
+        Console.Write("> ");
+        string filename = Console.ReadLine();
 
         using (StreamWriter outputFile = new StreamWriter(filename))
         {
@@ -203,7 +207,8 @@ public class GoalManager {
     public void loadGoal()
     {
         Console.WriteLine("What file do you want to load from?");
-        string filename = "C:/Users/threa/OneDrive/Documents/Projects/cse210/week06/EternalQuest/goals.txt";
+        Console.Write("> ");
+        string filename = Console.ReadLine();
         string[] lines = System.IO.File.ReadAllLines(filename);
         int itemCount = 0;
         _totalPoints = int.Parse(lines[0]);
@@ -272,6 +277,19 @@ public class GoalManager {
     public void displayPoints()
     {
         Console.WriteLine($"You have {_totalPoints} points!");
+    }
+
+    public void displayLevel()
+    {
+        _playerLevel = 0;
+        if (_totalPoints >= 100)
+        {
+            for (int i = 0; i < _totalPoints; i += 100)
+            {
+                _playerLevel += 1;
+            }
+        }
+        Console.WriteLine($"Level: {_playerLevel}");
     }
     
     public void markGoal()
