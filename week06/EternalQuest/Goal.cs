@@ -39,8 +39,4 @@ public abstract class Goal
 
     public abstract bool IsComplete();
 
-    // public virtual void setIsComplete(bool changedStatus)
-    // {
-    //     _
-    // }
 }
